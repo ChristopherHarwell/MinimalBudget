@@ -1,10 +1,8 @@
-﻿using BudgetsApi.Models;
+﻿using System.Collections.Generic;
 using MinimalBudget.Models;
 using MongoDB.Driver;
-using System.Collections.Generic;
-using System.Linq;
 
-namespace BudgetsApi.Services
+namespace MinimalBudget.Services
 {
     public class BudgetService
     {
