@@ -1,40 +1,41 @@
-﻿using System.Collections.Generic;
-using MinimalBudget.Models;
+﻿using MinimalBudget.Models;
 using MongoDB.Driver;
+using System.Collections.Generic;
+using System.Linq;
 
-namespace MinimalBudget.Services
+namespace BooksApi.Services
 {
     public class BudgetService
     {
-        private readonly IMongoCollection<Budget> _Budgets;
+        private readonly IMongoCollection<ItemPurchased> _items;
 
         public BudgetService(IBudgetDatabaseSettings settings)
         {
             var client = new MongoClient(settings.ConnectionString);
             var database = client.GetDatabase(settings.DatabaseName);
 
-            _Budgets = database.GetCollection<Budget>(settings.BudgetsCollectionName);
+            _items = database.GetCollection<ItemPurchased>(settings.BudgetCollectionName);
         }
 
-        public List<Budget> Get() =>
-            _Budgets.Find(Budget => true).ToList();
+        public List<ItemPurchased> Get() =>
+            _items.Find(ItemPurchased => true).ToList();
 
-        public Budget Get(string id) =>
-            _Budgets.Find<Budget>(Budget => Budget.Id == id).FirstOrDefault();
+        public ItemPurchased Get(string id) =>
+            _items.Find(ItemPurchased => ItemPurchased.Id == id).FirstOrDefault();
 
-        public Budget Create(Budget Budget)
+        public ItemPurchased Create(ItemPurchased ItemPurchased)
         {
-            _Budgets.InsertOne(Budget);
-            return Budget;
+            _items.InsertOne(ItemPurchased);
+            return ItemPurchased;
         }
 
-        public void Update(string id, Budget BudgetIn) =>
-            _Budgets.ReplaceOne(Budget => Budget.Id == id, BudgetIn);
+        public void Update(string id, ItemPurchased item) =>
+            _items.ReplaceOne(ItemPurchased => ItemPurchased.Id == id, item);
 
-        public void Remove(Budget BudgetIn) =>
-            _Budgets.DeleteOne(Budget => Budget.Id == BudgetIn.Id);
+        public void Remove(ItemPurchased item) =>
+            _items.DeleteOne(ItemPurchased => ItemPurchased.Id == item.Id);
 
         public void Remove(string id) =>
-            _Budgets.DeleteOne(Budget => Budget.Id == id);
+            _items.DeleteOne(ItemPurchased => ItemPurchased.Id == id);
     }
 }
