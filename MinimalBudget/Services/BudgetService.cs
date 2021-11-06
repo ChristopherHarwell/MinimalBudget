@@ -6,35 +6,35 @@ namespace MinimalBudget.Services
 {
     public class BudgetService
     {
-        private readonly IMongoCollection<Budget> _Budgets;
+        private readonly IMongoCollection<ItemPurchased> _itemsPurchased;
 
         public BudgetService(IBudgetDatabaseSettings settings)
         {
             var client = new MongoClient(settings.ConnectionString);
             var database = client.GetDatabase(settings.DatabaseName);
 
-            _Budgets = database.GetCollection<Budget>(settings.BudgetsCollectionName);
+            _itemsPurchased = database.GetCollection<ItemPurchased>(settings.ItemsCollectionName);
         }
 
-        public List<Budget> Get() =>
-            _Budgets.Find(Budget => true).ToList();
+        public List<ItemPurchased> Get() =>
+            _itemsPurchased.Find(item => true).ToList();
 
-        public Budget Get(string id) =>
-            _Budgets.Find<Budget>(Budget => Budget.Id == id).FirstOrDefault();
+        public ItemPurchased Get(string id) =>
+            _itemsPurchased.Find<ItemPurchased>(item => item.Id == id).FirstOrDefault();
 
-        public Budget Create(Budget Budget)
+        public ItemPurchased Create(ItemPurchased item)
         {
-            _Budgets.InsertOne(Budget);
-            return Budget;
+            _itemsPurchased.InsertOne(item);
+            return item;
         }
 
-        public void Update(string id, Budget BudgetIn) =>
-            _Budgets.ReplaceOne(Budget => Budget.Id == id, BudgetIn);
+        public void Update(string id, ItemPurchased budgetIn) =>
+            _itemsPurchased.ReplaceOne(item => item.Id == id, budgetIn);
 
-        public void Remove(Budget BudgetIn) =>
-            _Budgets.DeleteOne(Budget => Budget.Id == BudgetIn.Id);
+        public void Remove(ItemPurchased budgetIn) =>
+            _itemsPurchased.DeleteOne(item => item.Id == budgetIn.Id);
 
         public void Remove(string id) =>
-            _Budgets.DeleteOne(Budget => Budget.Id == id);
+            _itemsPurchased.DeleteOne(item => item.Id == id);
     }
 }
