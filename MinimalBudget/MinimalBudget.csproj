@@ -19,10 +19,7 @@
   <ItemGroup>
     <!-- Don't publish the SPA source files, but do show them in the project files list -->
     <Content Remove="$(SpaRoot)**" />
-    <None Remove="$(SpaRoot)**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
-    <None Remove="ClientApp\src\components\" />
-    <None Remove="ClientApp\src\Interfaces\" />
     <None Remove="Models\" />
     <None Remove="MongoDB.Driver.Core" />
     <None Remove="MongoDB.Driver" />
@@ -32,8 +29,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ClientApp\src\components\" />
-    <Folder Include="ClientApp\src\Interfaces\" />
     <Folder Include="Models\" />
     <Folder Include="Controllers\" />
     <Folder Include="Services\" />
