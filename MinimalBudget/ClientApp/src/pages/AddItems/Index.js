@@ -1,8 +1,8 @@
 import React from "react";
-import { InputField } from "../components/Input";
-import { Dropdown } from "../components/Dropdown";
+import { InputField } from "@components/Input";
+import { Dropdown } from "@components/Dropdown";
 import Button from "@mui/material/Button";
-import "./AddItems.css";
+import "./Styles.css";
 
 // TODO: Replace this with actual data
 import { dummyData } from "../data/dummyData";
